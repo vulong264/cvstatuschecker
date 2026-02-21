@@ -1,0 +1,6 @@
+# Development-only dependencies — never installed in the production Docker image
+-r requirements.txt
+
+# Secret scanning pre-commit hooks
+pre-commit==4.0.1
+detect-secrets==1.5.0

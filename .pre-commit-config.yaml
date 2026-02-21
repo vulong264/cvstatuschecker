@@ -1,0 +1,79 @@
+# ============================================================
+# Pre-commit hooks — run before every git commit
+#
+# Install once:
+#   pip install pre-commit
+#   pre-commit install
+#
+# Run manually on all files:
+#   pre-commit run --all-files
+# ============================================================
+
+repos:
+  # ── Secret / credential detection ──────────────────────────
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        name: Scan for secrets and credentials
+        args:
+          - "--baseline"
+          - ".secrets.baseline"
+          # Exclude files that legitimately contain dummy/example values
+          - "--exclude-files"
+          - "\.env\.example$"
+          - "--exclude-files"
+          - "README\.md$"
+
+  # ── Private key detection (built-in) ────────────────────────
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: detect-private-key
+        name: Detect private keys (PEM/RSA/etc.)
+
+      - id: check-added-large-files
+        name: Prevent committing large files (> 500KB)
+        args: ["--maxkb=500"]
+
+      - id: check-merge-conflict
+        name: Check for merge conflict markers
+
+      - id: end-of-file-fixer
+        name: Ensure files end with a newline
+
+      - id: trailing-whitespace
+        name: Trim trailing whitespace
+
+  # ── Filename checks ─────────────────────────────────────────
+      - id: check-json
+        name: Validate JSON syntax
+        # Exclude credential files that should never be committed anyway
+        exclude: "(service-account|credentials|token)\\.json$"
+
+      - id: check-yaml
+        name: Validate YAML syntax
+
+  # ── Block committing known-sensitive filenames ───────────────
+      - id: check-added-large-files
+      - id: forbid-new-submodules
+
+  - repo: local
+    hooks:
+      - id: block-credential-files
+        name: Block known credential file names
+        language: fail
+        files: |
+          (?x)(
+            service-account\.json|
+            credentials\.json|
+            token\.json|
+            \.env$|
+            .*\.pem$|
+            .*\.key$|
+            .*_rsa$|
+            .*_dsa$|
+            .*_ecdsa$|
+            .*_ed25519$
+          )
+        entry: "Refusing to commit credential files. Store secrets in GCP Secret Manager instead."

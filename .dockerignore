@@ -1,0 +1,42 @@
+# Never include secrets or credentials in the Docker image
+.env
+.env.*
+!.env.example
+*.json
+!app/**/*.json
+service-account.json
+credentials.json
+token.json
+
+# Development artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Database files (data lives in Cloud SQL, not in the container)
+*.db
+*.sqlite
+*.sqlite3
+
+# Docs and dev config
+README.md
+*.md
+.pre-commit-config.yaml
+.secrets.baseline
+deploy/
+
+# Git
+.git/
+.gitignore
+
+# Local logs and cache
+logs/
+*.log
+cv_cache/
+downloads/
