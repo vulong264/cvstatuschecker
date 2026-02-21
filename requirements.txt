@@ -1,0 +1,34 @@
+# Web Framework
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+
+# Database
+sqlalchemy==2.0.36
+alembic==1.14.0
+
+# Google Drive
+google-api-python-client==2.154.0
+google-auth-httplib2==0.2.0
+google-auth-oauthlib==1.2.1
+
+# CV file parsing
+pdfplumber==0.11.4
+python-docx==1.1.2
+
+# Anthropic Claude
+anthropic==0.40.0
+
+# Email (SendGrid)
+sendgrid==6.11.0
+
+# HTTP client
+httpx==0.27.2
+
+# Environment variables
+python-dotenv==1.0.1
+
+# Utilities
+pydantic==2.10.3
+pydantic-settings==2.6.1
+python-multipart==0.0.20
+Pillow==11.0.0
